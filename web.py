@@ -67,5 +67,24 @@ try:
             js_file.write(js_code)
 
         print("HTML, CSS, and JavaScript code saved to text files.")
+        # Retrieve and save images
+        img_tags = soup.find_all("img")
+        for img_tag in img_tags:
+            img_url = img_tag.get("src")
+            if img_url:
+                img_url = urljoin(url, img_url)
+                img_response = requests.get(img_url)
+                if img_response.status_code == 200:
+                    img_name = os.path.join(
+                        assets_folder, os.path.basename(urlparse(img_url).path)
+                    )
+                    with open(img_name, "wb") as img_file:
+                        img_file.write(img_response.content)
+                    print(f"Image saved: {img_name}")
 
+    else:
+        print("Failed to retrieve the webpage. Status code:", response.status_code)
+
+except requests.exceptions.RequestException as e:
+    print("An error occurred:", str(e))
 
