@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
 import os
 
-# URL of the website you want to scrape
 url = "https://www.facebook.com/"
 
 # Create a folder named "assets" if it doesn't exist
